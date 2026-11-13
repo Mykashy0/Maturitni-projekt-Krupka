@@ -1,8 +1,12 @@
-import pygame, sys, mysql.connector                                                                                                          # Načte knihovnu Pygame pro hru a modul sys pro ukončení programu.
+import pygame, sys
 from pathlib import Path
+
+try:
+    import mysql.connector                                                                                                     # Načte knihovnu pro práci s MySQL databází.
+except ImportError:
+    mysql = None
+
 from button import Button                                                                                                   # Načte vlastní třídu Button pro vytváření tlačítek.
-
-
 
 pygame.init()                                                                                                               # Inicializuje moduly Pygame, které hra potřebuje.
 
@@ -12,56 +16,50 @@ pygame.display.set_caption("Menu - Astrallift")                                 
 ASSET_DIR = Path(__file__).resolve().parent / "assets"
 BG = pygame.image.load(str(ASSET_DIR / "images" / "Background.png"))                                                        # Načte obrázek pozadí ze zadaného umístění.
 
-#SQL - Database 
+#SQL - Database
 from pripojeni import *
 
-# 1) Připojení k databázi
-mydb = mysql.connector.connect(
-    host=HOST,          # URL adresa databázového serveru
-    user=USER,          # uživatelské jméno
-    password=PASSWORD,  # heslo
-    database=DATABASE   # název databáze
-)
+mydb = None
+mycursor = None
+if mysql is not None:
+    try:
+        mydb = mysql.connector.connect(
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE
+        )
+        mycursor = mydb.cursor()
 
-# 2) Vytvoření kurzoru — přes něj posíláme SQL příkazy a čteme výsledky
-mycursor = mydb.cursor()
+        mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS hraci (
+                id INT,
+                jmeno VARCHAR(15)
+            )
+        """)
 
-<<<<<<< HEAD:Projekt/Hra/main.py
-# 3) Odpojení — vždy na konci uzavřeme kurzor i spojení
-mycursor.close()
-mydb.close()
+        mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS hra (
+                id INT,
+                hrac_id INT,
+                skore INT,
+                rucne_vytezeno INT,
+                stroji_vytezeno INT,
+                datum DATETIME
+            )
+        """)
 
-print("✅ Připojení a odpojení proběhlo úspěšně.")
-=======
->>>>>>> 2f502a8 (feat: snad funguje dik):Krupka - Projekt/Hra/main.py
-
-# SQL dotaz v trojitých uvozovkách — umožňuje zápis na více řádků
-mycursor.execute("""
-    CREATE TABLE IF NOT EXISTS hraci (
-        id INT,
-        jmeno VARCHAR(15)
-    )
-""")
-
-mycursor.execute("""
-    CREATE TABLE IF NOT EXISTS hra (
-        id INT,
-        hrac_id INT,
-        skore INT,
-        rucne_vytezeno INT,
-        stroji_vytezeno INT,
-        datum DATETIME
-    )
-""")
-
-# commit() potvrdí provedení příkazu (jako stisknutí Enter)
-mydb.commit()
-
-# 3) Odpojení — vždy až po dokončení databázových příkazů
-mycursor.close()
-mydb.close()
-
-print("✅ Připojení, vytvoření tabulek a odpojení proběhlo úspěšně.")
+        mydb.commit()
+        print("✅ Databáze je připravena.")
+    except mysql.connector.Error as error:
+        print(f"⚠️ Databáze není dostupná: {error}")
+    finally:
+        if mycursor is not None:
+            mycursor.close()
+        if mydb is not None and mydb.is_connected():
+            mydb.close()
+else:
+    print("⚠️ mysql.connector není nainstalovaný, hra pokračuje bez databáze.")
 
 #----------------------Konec SQL----------------------
 
