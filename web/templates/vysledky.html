@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Výsledky – Astrallift</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styly.css') }}">
+</head>
+<body>
+    <!-- Navigace (je stejná na všech stránkách) -->
+    <nav>
+        <a class="logo" href="/">ASTRALLIFT</a>
+        <a href="/">O hře</a>
+        <a href="/vysledky">Výsledky</a>
+        <a href="/autor">Autor</a>
+        {% if jmeno %}
+            <span class="ucet">Přihlášen: <b>{{ jmeno }}</b> <a href="/odhlaseni">Odhlásit</a></span>
+        {% else %}
+            <span class="ucet"><a href="/prihlaseni">Přihlásit / Registrace</a></span>
+        {% endif %}
+    </nav>
+
+    <main>
+        <h1>Výsledky</h1>
+
+        {% if chyba %}
+            <p class="chyba">{{ chyba }}</p>
+        {% endif %}
+
+        <!-- Hledání hráče – pošle text do adresy jako ?hledat=... -->
+        <form method="GET" action="/vysledky" class="hledani">
+            <input type="text" name="hledat" placeholder="Hledat hráče…" value="{{ hledat }}">
+            <button type="submit">Hledat</button>
+        </form>
+
+        <h2>Žebříček</h2>
+        <!-- zebricek = řádky z databáze: (jméno, skóre, délka hry, datum) -->
+        <table>
+            <tr><th>#</th><th>Hráč</th><th>Body</th><th>Délka hry</th><th>Datum</th></tr>
+            {% for hra in zebricek %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ hra[0] }}</td>
+                    <td>{{ hra[1] }}</td>
+                    <td>{{ hra[2] }} min</td>
+                    <td>{{ hra[3].strftime("%d. %m. %Y %H:%M") }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Nejlepší hráči</h2>
+        <!-- nejlepsi_hraci = řádky: (jméno, nejlepší skóre, počet her) -->
+        <table>
+            <tr><th>Hráč</th><th>Nejlepší skóre</th><th>Počet her</th></tr>
+            {% for hrac in nejlepsi_hraci %}
+                <tr>
+                    <td>{{ hrac[0] }}</td>
+                    <td>{{ hrac[1] }}</td>
+                    <td>{{ hrac[2] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Moje hry</h2>
+        {% if jmeno %}
+            <!-- moje_hry = řádky: (skóre, délka hry, datum) -->
+            <table>
+                <tr><th>Body</th><th>Délka hry</th><th>Datum</th></tr>
+                {% for hra in moje_hry %}
+                    <tr>
+                        <td>{{ hra[0] }}</td>
+                        <td>{{ hra[1] }} min</td>
+                        <td>{{ hra[2].strftime("%d. %m. %Y %H:%M") }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p><a href="/prihlaseni">Přihlas se</a> a uvidíš i své hry.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

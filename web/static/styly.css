@@ -1,0 +1,134 @@
+/* Astrallift – vzhled všech stránek webu */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #191923;
+    color: #ebebeb;
+}
+
+a {
+    color: #b4a0ff;
+}
+
+h1, h2 {
+    color: #b4a0ff;
+}
+
+/* Navigační lišta nahoře */
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 12px 24px;
+    background: #0f0f16;
+}
+
+nav a {
+    color: #ebebeb;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #b4a0ff;
+}
+
+nav .logo {
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #b4a0ff;
+}
+
+nav .ucet {
+    margin-left: auto;      /* odsune přihlášení doprava */
+}
+
+/* Obsah stránky */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tabulky */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #333344;
+    text-align: left;
+}
+
+th {
+    background: #26263a;
+}
+
+/* Formuláře */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 320px;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #555570;
+    border-radius: 6px;
+    background: #26263a;
+    color: #ebebeb;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #6a5acd;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #7d6ee0;
+}
+
+/* Velké zelené tlačítko Hrát */
+button.hrat {
+    font-size: 1.4em;
+    padding: 14px 40px;
+    background: #2e9e5b;
+}
+
+button.hrat:hover {
+    background: #38b86b;
+}
+
+/* Hledání hráče (políčko a tlačítko vedle sebe) */
+form.hledani {
+    flex-direction: row;
+    max-width: none;
+}
+
+/* Přihlášení a registrace vedle sebe */
+.dva-sloupce {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+/* Hlášky */
+.chyba {
+    padding: 10px;
+    border-radius: 6px;
+    background: #5a2020;
+}
+
+.info {
+    padding: 10px;
+    border-radius: 6px;
+    background: #24324a;
+}

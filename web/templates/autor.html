@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Autor – Astrallift</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styly.css') }}">
+</head>
+<body>
+    <!-- Navigace (je stejná na všech stránkách) -->
+    <nav>
+        <a class="logo" href="/">ASTRALLIFT</a>
+        <a href="/">O hře</a>
+        <a href="/vysledky">Výsledky</a>
+        <a href="/autor">Autor</a>
+        {% if jmeno %}
+            <span class="ucet">Přihlášen: <b>{{ jmeno }}</b> <a href="/odhlaseni">Odhlásit</a></span>
+        {% else %}
+            <span class="ucet"><a href="/prihlaseni">Přihlásit / Registrace</a></span>
+        {% endif %}
+    </nav>
+
+    <main>
+        <h1>Autor</h1>
+        <p><b>Krupka</b>, 4. ročník – maturitní projekt z programování.</p>
+
+        <h2>Použité technologie</h2>
+        <ul>
+            <li>Hra: Python + Pygame</li>
+            <li>Web: Flask, HTML, CSS</li>
+            <li>Databáze: MySQL (mysql.connector), hesla přes bcrypt</li>
+            <li>Git + GitHub</li>
+        </ul>
+    </main>
+</body>
+</html>

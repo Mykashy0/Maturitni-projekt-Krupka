@@ -1,0 +1,13 @@
+# Knihovny, které je potřeba nainstalovat:
+#   pip install -r requirements.txt
+
+pygame>=2.6                       # hra (hra.py)
+mysql-connector-python>=9.0       # databáze (hra.py i web/app.py)
+flask>=3.0                        # web (web/app.py)
+bcrypt>=4.0                       # hashování hesel (web/app.py)
+
+# Tohle se NEINSTALUJE – je to součást Pythonu, jen pro přehled, co ještě používáme:
+#   os          – práce se složkami (hra.py, web/app.py)
+#   sys         – cesta k Pythonu a ke složce s pripojeni.py (web/app.py)
+#   subprocess  – spuštění hry z webu (web/app.py)
+#   webbrowser  – otevření webu ze hry (hra.py)

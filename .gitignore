@@ -3,6 +3,7 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+pripojeni.py
 # C extensions
 *.so
 pripojeni.py
@@ -224,3 +225,6 @@ Maturitni projekt/
 └── Projekt/
     └── Hra/
         └── pripojeni.py
+# Soubory, které si vytváří hra a web samy (každý počítač má svoje)
+volby.txt
+prihlaseny.txt

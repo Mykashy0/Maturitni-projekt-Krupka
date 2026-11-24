@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Přihlášení – Astrallift</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styly.css') }}">
+</head>
+<body>
+    <!-- Navigace (je stejná na všech stránkách) -->
+    <nav>
+        <a class="logo" href="/">ASTRALLIFT</a>
+        <a href="/">O hře</a>
+        <a href="/vysledky">Výsledky</a>
+        <a href="/autor">Autor</a>
+        {% if jmeno %}
+            <span class="ucet">Přihlášen: <b>{{ jmeno }}</b> <a href="/odhlaseni">Odhlásit</a></span>
+        {% else %}
+            <span class="ucet"><a href="/prihlaseni">Přihlásit / Registrace</a></span>
+        {% endif %}
+    </nav>
+
+    <main class="dva-sloupce">
+        <!-- Přihlášení – odešle se na /prihlaseni -->
+        <div>
+            <h1>Přihlášení</h1>
+            {% if chyba %}
+                <p class="chyba">{{ chyba }}</p>
+            {% endif %}
+            <form method="POST" action="/prihlaseni">
+                <label for="jmeno">Jméno</label>
+                <input type="text" name="jmeno" id="jmeno" required>
+                <label for="heslo">Heslo</label>
+                <input type="password" name="heslo" id="heslo" required>
+                <button type="submit">Přihlásit</button>
+            </form>
+        </div>
+
+        <!-- Registrace – odešle se na /registrace -->
+        <div>
+            <h1>Registrace</h1>
+            {% if chyba_registrace %}
+                <p class="chyba">{{ chyba_registrace }}</p>
+            {% endif %}
+            <form method="POST" action="/registrace">
+                <label for="nove_jmeno">Jméno (3–30 znaků)</label>
+                <input type="text" name="jmeno" id="nove_jmeno" required minlength="3" maxlength="30">
+                <label for="nove_heslo">Heslo (aspoň 6 znaků)</label>
+                <input type="password" name="heslo" id="nove_heslo" required minlength="6">
+                <button type="submit">Zaregistrovat</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

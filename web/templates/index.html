@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Astrallift</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styly.css') }}">
+</head>
+<body>
+    <!-- Navigace (je stejná na všech stránkách) -->
+    <nav>
+        <a class="logo" href="/">ASTRALLIFT</a>
+        <a href="/">O hře</a>
+        <a href="/vysledky">Výsledky</a>
+        <a href="/autor">Autor</a>
+        {% if jmeno %}
+            <span class="ucet">Přihlášen: <b>{{ jmeno }}</b> <a href="/odhlaseni">Odhlásit</a></span>
+        {% else %}
+            <span class="ucet"><a href="/prihlaseni">Přihlásit / Registrace</a></span>
+        {% endif %}
+    </nav>
+
+    <main>
+        <h1>Astrallift</h1>
+        <p>
+            Astrallift je 2D hra v Pythonu (Pygame). Na jedné straně mapy je ložisko železné rudy,
+            na druhé vesmírný výtah. Za časový limit (1, 3 nebo 5 minut) musíš poslat výtahem
+            co nejvíc bodů. Na konci se skóre uloží do databáze.
+        </p>
+
+        <!-- Tlačítko Hrát: přihlášený hráč hru spustí, nepřihlášený se musí přihlásit -->
+        {% if zprava %}
+            <p class="info">{{ zprava }}</p>
+        {% endif %}
+        {% if jmeno %}
+            <form method="POST" action="/hrat">
+                <button type="submit" class="hrat">▶ Hrát</button>
+            </form>
+        {% else %}
+            <p class="info">Abys mohl hrát, musíš se <a href="/prihlaseni">přihlásit</a>.</p>
+        {% endif %}
+
+        <h2>Pravidla</h2>
+        <ul>
+            <li>Těž rudu ručně (klávesa E), nebo postav <b>těžič</b>, který těží sám.</li>
+            <li><b>Pec</b> udělá z rudy ingot, <b>lis</b> udělá z ingotu plech.</li>
+            <li>Stroje propoj <b>pásy</b> – věci po nich dojedou do dalšího stroje nebo do výtahu.</li>
+            <li>Body se počítají jen za to, co odejde <b>výtahem</b>: ruda 1, ingot 2, plech 4.</li>
+        </ul>
+
+        <table>
+            <tr><th>Stavba</th><th>Velikost</th><th>Cena</th><th>Co dělá</th></tr>
+            <tr><td>Těžič</td><td>1×1</td><td>5 rudy</td><td>stojí na rudě, každé 2 s vytěží 1 rudu</td></tr>
+            <tr><td>Pec</td><td>2×1</td><td>10 rudy</td><td>každé 2 s udělá z rudy ingot</td></tr>
+            <tr><td>Lis</td><td>2×1</td><td>15 rudy</td><td>každé 3 s udělá z ingotu plech</td></tr>
+            <tr><td>Pás</td><td>1×1</td><td>1 ruda</td><td>veze věci ve směru šipky</td></tr>
+        </table>
+
+        <h2>Ovládání</h2>
+        <table>
+            <tr><th>Klávesa</th><th>Co dělá</th></tr>
+            <tr><td>W A S D / šipky</td><td>pohyb</td></tr>
+            <tr><td>E</td><td>těžit rudu / obsloužit stroj / sebrat věc z pásu / odeslat výtahem</td></tr>
+            <tr><td>1 / 2 / 3 / 4</td><td>vybrat stavbu (těžič / pec / lis / pás)</td></tr>
+            <tr><td>levé tlačítko myši</td><td>postavit (pás jde táhnout)</td></tr>
+            <tr><td>R</td><td>otočit směr stavby</td></tr>
+            <tr><td>pravé tlačítko myši</td><td>zbourat</td></tr>
+            <tr><td>Esc</td><td>zrušit výběr / zpět do menu</td></tr>
+        </table>
+    </main>
+</body>
+</html>
