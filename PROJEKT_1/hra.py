@@ -61,7 +61,7 @@ VYTAH_SIRKA = 3
 VYTAH_VYSKA = 4
 
 # Kolik bodů je za jeden kus předmětu
-BODY = {"ruda": 1, "ingot": 2, "plech": 4}
+BODY = {"ruda": 1, "ingot": 3, "plech": 8}
 
 # Stroje:
 #   cena     = kolik rudy stojí postavení
